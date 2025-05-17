@@ -82,8 +82,8 @@ class Application(Funcs):
         self.lista_frame2()
         self.montaTabelas()
         self.select_lista()
+        self.menus()
         root.mainloop()
-
     def tela(self):
         self.root.title("Cadastro de Clientes")
         self.root.configure(background='#1e3743')
@@ -91,14 +91,12 @@ class Application(Funcs):
         self.root.resizable(True, True)
         self.root.maxsize(width=900, height=700)
         self.root.minsize(width=480, height=300)
-
     def frames_da_tela(self):
         self.frame1 = Frame(self.root, bd=4, bg='#dfe3ee', highlightbackground='#759fe6', highlightthickness=3)
         self.frame1.place(relx= 0.02, rely= 0.02, relwidth= 0.96, relheight= 0.46)
 
         self.frame2 = Frame(self.root, bd=4, bg='#dfe3ee', highlightbackground='#759fe6', highlightthickness=3)
         self.frame2.place(relx= 0.02, rely= 0.5, relwidth= 0.96, relheight= 0.46)
-
     def widgets_frame1(self):
         ##criando o botao limpar
         self.bt_limpar = Button(self.frame1, text='Limpar', bd = 4, bg= '#a3b1d6', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.limpa_tela)
@@ -147,7 +145,6 @@ class Application(Funcs):
 
         self.cidade_entry = Entry(self.frame1)
         self.cidade_entry.place(relx= 0.50, rely= 0.75, relwidth= 0.4 )
-
     def lista_frame2(self):
         self.listaCli = ttk.Treeview(self.frame2, height=3, column=("col1","col2","col3","col4"))
         self.listaCli.heading ("#0", text="") 
@@ -168,5 +165,18 @@ class Application(Funcs):
         self.listaCli.configure(yscroll=self.scroolLista.set)
         self.scroolLista.place(relx=0.96,rely=0.1,relwidth=0.03, relheight=0.85)
         self.listaCli.bind("<Double-1>", self.OnDoubleClick)
+    def menus(self):
+        menubar = Menu(self.root)
+        self.root.config(menu=menubar)
+        filemenu = Menu(menubar)
+        filemenu2 = Menu(menubar)
+
+        def Quit(): self.root.destroy()
+
+        menubar.add_cascade(label = "Opções", menu= filemenu)
+        menubar.add_cascade(label = "Sobre", menu= filemenu2)
+
+        filemenu.add_command(label="Sair", command= Quit)
+        filemenu2.add_command(label="Limpa Cliente", command= self.limpa_tela)
 
 Application()
