@@ -6,6 +6,8 @@ Este é um aplicativo desktop simples de **cadastro de clientes**, desenvolvido 
 
 - Interface gráfica com campos para nome, telefone, cidade e código.
 - Adição de novos clientes ao banco de dados.
+- Incluso Double Click para selecionar o cliente.
+- Incluso a função para deletar clientes.
 - Listagem dos clientes cadastrados com ordenação alfabética.
 - Limpeza de campos de entrada.
 - Banco de dados local persistente (`clientes_teste.db`).
@@ -41,7 +43,7 @@ O programa abrirá uma janela com a interface gráfica para cadastro de clientes
 
 ## 🔧 Melhorias Futuras
 
-- Implementação das funções de **buscar**, **alterar** e **apagar** clientes.
+- Implementação das funções de **buscar** e **alterar** clientes.
 - Validação de campos obrigatórios.
 - Exportação de dados para CSV ou PDF.
 - Filtro de busca por cidade ou nome.
