@@ -2,7 +2,39 @@ from tkinter import *
 from tkinter import ttk
 import sqlite3 
 
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, A4
+from reportlab.pdfbase import pdfmetrics
+from reportlab.platypus import SimpleDocTemplate, Image
+import webbrowser
+
 root = Tk()
+
+class Relatorios():
+    def printCliente(self):
+        webbrowser.open("Cliente.pdf")
+    def geraRelatCliente(self):
+        self.c = canvas.Canvas("Cliente.pdf")
+        self.codigoRel = self.codigo_entry.get()
+        self.nomeRel = self.nome_entry.get()
+        self.telefoneRel = self.telefone_entry.get()
+        self.cidadeoRel = self.cidade_entry.get()
+
+        self.c.setFont("Helvetica-Bold", 24)
+        self.c.drawString(200, 790, 'Ficha do Cliente')
+
+        self.c.setFont("Helvetica-Bold", 18)
+        self.c.drawString(50,700, 'Codigo: ' + self.codigoRel)
+        self.c.drawString(50,670, 'Nome: ' + self.nomeRel)
+        self.c.drawString(50,640, 'Telefone: ' + self.telefoneRel)
+        self.c.drawString(50,610, 'Cidade: ' + self.cidadeoRel)
+
+        self.c.rect(40,780,500,40,fill=False, stroke=True)
+
+
+        self.c.showPage()
+        self.c.save()
+        self.printCliente()
 
 class Funcs():
     def limpa_tela(self):
@@ -65,15 +97,23 @@ class Funcs():
         self.variaveis()
         self.conecta_db()
 
-        self.cursor.execute("""DELETE FROM clientes WHERE cod = ?""",(self.codigo))
+        self.cursor.execute("""DELETE FROM clientes WHERE cod = ?""", (self.codigo,))
         self.conn.commit()
         
         self.desconectar_db()
         self.limpa_tela()
         self.select_lista()
+    def alterar_cliente(self):
+        self.variaveis()
+        self.conecta_db()
+        self.cursor.execute("""UPDATE clientes SET nome_cliente = ?, telefone = ?, cidade = ?
+                            WHERE cod = ? """, (self.nome, self.telefone, self.cidade, self.codigo))
+        self.conn.commit()
+        self.desconectar_db()
+        self.select_lista()
+        self.limpa_tela()
 
-
-class Application(Funcs):
+class Application(Funcs, Relatorios):
     def __init__(self):
         self.root = root
         self.tela()
@@ -108,7 +148,7 @@ class Application(Funcs):
         self.bt_novo = Button(self.frame1, text='Novo', bd = 4, bg= '#7ec4a5', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.add_cliente)
         self.bt_novo.place(relx= 0.6 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao alterar
-        self.bt_alterar = Button(self.frame1, text='Alterar', bd = 4, bg= '#c4a77e', fg = 'white', font = ('veridiana', 8, 'bold'))
+        self.bt_alterar = Button(self.frame1, text='Alterar', bd = 4, bg= '#c4a77e', fg = 'white', font = ('veridiana', 8, 'bold'), command=self.alterar_cliente)
         self.bt_alterar.place(relx= 0.71 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao apagar
         self.bt_apagar = Button(self.frame1, text='Apagar', bd = 4, bg= '#c47e7e', fg = 'white', font = ('veridiana', 8, 'bold'), command=self.deleta_cliente)
@@ -174,9 +214,11 @@ class Application(Funcs):
         def Quit(): self.root.destroy()
 
         menubar.add_cascade(label = "Opções", menu= filemenu)
-        menubar.add_cascade(label = "Sobre", menu= filemenu2)
+        menubar.add_cascade(label = "Relatorios", menu= filemenu2)
 
         filemenu.add_command(label="Sair", command= Quit)
-        filemenu2.add_command(label="Limpa Cliente", command= self.limpa_tela)
+        filemenu.add_command(label="Limpa Cliente", command= self.limpa_tela)
+
+        filemenu2.add_command(label="Ficha do Cliente", command= self.geraRelatCliente)
 
 Application()
