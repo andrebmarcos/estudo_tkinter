@@ -152,52 +152,64 @@ class Application(Funcs, Relatorios):
         self.frame2 = Frame(self.root, bd=4, bg='#dfe3ee', highlightbackground='#759fe6', highlightthickness=3)
         self.frame2.place(relx= 0.02, rely= 0.5, relwidth= 0.96, relheight= 0.46)
     def widgets_frame1(self):
+        self.abas = ttk.Notebook(self.frame1)
+        self.aba1 = Frame(self.abas)
+        self.aba2 = Frame(self.abas)
+
+        self.aba1.configure(background="#dfe3ee")
+        self.aba2.configure(background="lightgray")
+
+        self.abas.add(self.aba1, text="Aba 1")
+        self.abas.add(self.aba2, text="Aba 2")
+
+        self.abas.place(relx=0,rely=0, relwidth=0.98, relheight=0.98)
+
         ##criando o botao limpar
-        self.bt_limpar = Button(self.frame1, text='Limpar', bd = 4, bg= '#a3b1d6', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.limpa_tela)
+        self.bt_limpar = Button(self.aba1, text='Limpar', bd = 4, bg= '#a3b1d6', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.limpa_tela)
         self.bt_limpar.place(relx= 0.2 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao buscar
-        self.bt_buscar = Button(self.frame1, text='Buscar', bd = 4, bg= '#a3b1d6', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.buscar_cliente)
+        self.bt_buscar = Button(self.aba1, text='Buscar', bd = 4, bg= '#a3b1d6', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.buscar_cliente)
         self.bt_buscar.place(relx= 0.31 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao novo
-        self.bt_novo = Button(self.frame1, text='Novo', bd = 4, bg= '#7ec4a5', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.add_cliente)
+        self.bt_novo = Button(self.aba1, text='Novo', bd = 4, bg= '#7ec4a5', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.add_cliente)
         self.bt_novo.place(relx= 0.6 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao alterar
-        self.bt_alterar = Button(self.frame1, text='Alterar', bd = 4, bg= '#c4a77e', fg = 'white', font = ('veridiana', 8, 'bold'), command=self.alterar_cliente)
+        self.bt_alterar = Button(self.aba1, text='Alterar', bd = 4, bg= '#c4a77e', fg = 'white', font = ('veridiana', 8, 'bold'), command=self.alterar_cliente)
         self.bt_alterar.place(relx= 0.71 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao apagar
-        self.bt_apagar = Button(self.frame1, text='Apagar', bd = 4, bg= '#c47e7e', fg = 'white', font = ('veridiana', 8, 'bold'), command=self.deleta_cliente)
+        self.bt_apagar = Button(self.aba1, text='Apagar', bd = 4, bg= '#c47e7e', fg = 'white', font = ('veridiana', 8, 'bold'), command=self.deleta_cliente)
         self.bt_apagar.place(relx= 0.82 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
 
         #Criação da label de entrada codigo
 
-        self.lb_codigo = Label(self.frame1, text = 'Codigo', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
+        self.lb_codigo = Label(self.aba1, text = 'Codigo', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
         self.lb_codigo.place(relx= 0.05, rely= 0.05 )
 
-        self.codigo_entry = Entry(self.frame1)
+        self.codigo_entry = Entry(self.aba1)
         self.codigo_entry.place(relx= 0.05, rely= 0.15, relwidth= 0.08 )
 
         #Criação da label de entrada nome
 
-        self.nome = Label(self.frame1, text = 'Nome', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
+        self.nome = Label(self.aba1, text = 'Nome', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
         self.nome.place(relx= 0.05, rely= 0.35 )
 
-        self.nome_entry = Entry(self.frame1)
+        self.nome_entry = Entry(self.aba1)
         self.nome_entry.place(relx= 0.05, rely= 0.45, relwidth= 0.8 )
 
         #Criação da label de entrada Telefone
 
-        self.telefone = Label(self.frame1, text = 'Telefone', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
+        self.telefone = Label(self.aba1, text = 'Telefone', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
         self.telefone.place(relx= 0.05, rely= 0.65 )
 
-        self.telefone_entry = Entry(self.frame1)
+        self.telefone_entry = Entry(self.aba1)
         self.telefone_entry.place(relx= 0.05, rely= 0.75, relwidth= 0.3 )
 
         #Criação da label de entrada Cidade
 
-        self.cidade = Label(self.frame1, text = 'Cidade', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
+        self.cidade = Label(self.aba1, text = 'Cidade', bg='#dfe3ee',  font = ('veridiana', 8, 'bold'))
         self.cidade.place(relx= 0.50, rely= 0.65 )
 
-        self.cidade_entry = Entry(self.frame1)
+        self.cidade_entry = Entry(self.aba1)
         self.cidade_entry.place(relx= 0.50, rely= 0.75, relwidth= 0.4 )
     def lista_frame2(self):
         self.listaCli = ttk.Treeview(self.frame2, height=3, column=("col1","col2","col3","col4"))
