@@ -211,6 +211,15 @@ class Application(Funcs, Relatorios):
 
         self.cidade_entry = Entry(self.aba1)
         self.cidade_entry.place(relx= 0.50, rely= 0.75, relwidth= 0.4 )
+
+        self.Tipovar = StringVar(self.aba2)
+        self.TipV = ("Solteiro(a)", "Casado(a)", "Divorsido(a)", "Viuvo(a)")
+        self.Tipovar.set("Solteiro(a)")
+        self.popupMenu = OptionMenu(self.aba2, self.Tipovar, *self.TipV)
+        self.popupMenu.place(relx= 0.1 , rely=0.1,relwidth= 0.2 ,relheight= 0.2)
+        self.estado_civil = self.Tipovar.get()
+        print(self.estado_civil)
+
     def lista_frame2(self):
         self.listaCli = ttk.Treeview(self.frame2, height=3, column=("col1","col2","col3","col4"))
         self.listaCli.heading ("#0", text="") 
