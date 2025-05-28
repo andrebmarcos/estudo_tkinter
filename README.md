@@ -5,7 +5,7 @@ Este é um aplicativo desktop simples de **cadastro de clientes**, desenvolvido 
 ## 🖥️ Funcionalidades
 
 - Interface gráfica com campos para nome, telefone, cidade e código.
-- Adição de novos clientes ao banco de dados.
+- Quando clica em Novo, ele abre uma janela de Cadastro.
 - Incluso Double Click para selecionar o cliente.
 - Incluso a função para deletar clientes.
 - Incluso a função alterar clientes.

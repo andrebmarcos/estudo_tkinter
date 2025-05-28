@@ -75,6 +75,7 @@ class Funcs():
         self.desconectar_db()
         self.select_lista()
         self.limpa_tela()
+        self.root2.destroy()
     def select_lista(self):
         self.listaCli.delete(*self.listaCli.get_children())
         self.conecta_db()
@@ -171,7 +172,7 @@ class Application(Funcs, Relatorios):
         self.bt_buscar = Button(self.aba1, text='Buscar', bd = 4, bg= '#a3b1d6', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.buscar_cliente)
         self.bt_buscar.place(relx= 0.31 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao novo
-        self.bt_novo = Button(self.aba1, text='Novo', bd = 4, bg= '#7ec4a5', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.add_cliente)
+        self.bt_novo = Button(self.aba1, text='Novo', bd = 4, bg= '#7ec4a5', fg = 'white', font = ('veridiana', 8, 'bold'), command= self.janela2)
         self.bt_novo.place(relx= 0.6 , rely=0.1,relwidth= 0.1 ,relheight= 0.15)
         ##criando o botao alterar
         self.bt_alterar = Button(self.aba1, text='Alterar', bd = 4, bg= '#c4a77e', fg = 'white', font = ('veridiana', 8, 'bold'), command=self.alterar_cliente)
@@ -255,5 +256,58 @@ class Application(Funcs, Relatorios):
         filemenu.add_command(label="Limpa Cliente", command= self.limpa_tela)
 
         filemenu2.add_command(label="Ficha do Cliente", command= self.geraRelatCliente)
+    def janela2(self):
+        self.root2 = Toplevel()
+        self.root2.title("Cadastrar Novo")
+        self.root2.configure(background='lightblue')
+        self.root2.geometry("600x200")
+        self.root2.resizable(False, False)
+        self.root2.transient(self.root)
+        self.root2.focus_force()
+        self.root2.grab_set()
+
+        # Campos e botões locais à janela secundária
+        lb_codigo = Label(self.root2, text='Codigo', bg='#dfe3ee', font=('veridiana', 8, 'bold'))
+        lb_codigo.place(relx=0.05, rely=0.05)
+        codigo_entry2 = Entry(self.root2)
+        codigo_entry2.place(relx=0.05, rely=0.15, relwidth=0.08)
+
+        lb_nome = Label(self.root2, text='Nome', bg='#dfe3ee', font=('veridiana', 8, 'bold'))
+        lb_nome.place(relx=0.05, rely=0.35)
+        nome_entry2 = Entry(self.root2)
+        nome_entry2.place(relx=0.05, rely=0.45, relwidth=0.8)
+
+        lb_telefone = Label(self.root2, text='Telefone', bg='#dfe3ee', font=('veridiana', 8, 'bold'))
+        lb_telefone.place(relx=0.05, rely=0.65)
+        telefone_entry2 = Entry(self.root2)
+        telefone_entry2.place(relx=0.05, rely=0.75, relwidth=0.3)
+
+        lb_cidade = Label(self.root2, text='Cidade', bg='#dfe3ee', font=('veridiana', 8, 'bold'))
+        lb_cidade.place(relx=0.50, rely=0.65)
+        cidade_entry2 = Entry(self.root2)
+        cidade_entry2.place(relx=0.50, rely=0.75, relwidth=0.4)
+
+        def salvar_cliente():
+            self.conecta_db()
+            self.cursor.execute(
+                """INSERT INTO clientes (nome_cliente, telefone, cidade) VALUES (?, ?, ?)""",
+                (nome_entry2.get(), telefone_entry2.get(), cidade_entry2.get())
+            )
+            self.conn.commit()
+            self.desconectar_db()
+            self.select_lista()
+            self.root2.destroy()
+
+        bt_salvar = Button(self.root2, text='Salvar', bd=4, bg='#7ec4a5', fg='white',
+                        font=('veridiana', 8, 'bold'), command=salvar_cliente)
+        bt_salvar.place(relx=0.6, rely=0.1, relwidth=0.1, relheight=0.15)
+
+        bt_limpar = Button(self.root2, text='Limpar', bd=4, bg='#a3b1d6', fg='white',
+                        font=('veridiana', 8, 'bold'),
+                        command=lambda: [nome_entry2.delete(0, END),
+                                            telefone_entry2.delete(0, END),
+                                            cidade_entry2.delete(0, END)])
+        bt_limpar.place(relx=0.71, rely=0.1, relwidth=0.1, relheight=0.15)
+        
 
 Application()
